@@ -10,7 +10,7 @@ Renderer::Renderer(SDL_Window* window)
     }
 
     SDL_GetWindowSize(window, &m_windowSize.x, &m_windowSize.y);
-    m_halfWindowSize = { m_windowSize.x / 2, m_windowSize.y / 2};
+    m_halfWindowSize = { m_windowSize.x / 2, m_windowSize.y / 2 };
 
     m_colorBuffer = new uint32_t[m_windowSize.x * m_windowSize.y];
     m_colorBufferTexture = SDL_CreateTexture(m_renderer, SDL_PIXELFORMAT_RGBA32, SDL_TEXTUREACCESS_STREAMING, m_windowSize.x, m_windowSize.y);
@@ -48,7 +48,7 @@ void Renderer::CastRays(const Player& player, const Map& map)
     float incrementAngle = player.m_fieldOfView / numberOfRays;
 
     m_rays.clear();
-    for(int col = 0; col < numberOfRays; col++) // cast a ray for each horizontal column of the screen
+    for (int col = 0; col < numberOfRays; col++) // cast a ray for each horizontal column of the screen
     {
         Ray ray(rayAngle);
         ray.CastRay(player, map);
@@ -57,20 +57,20 @@ void Renderer::CastRays(const Player& player, const Map& map)
     }
 }
 
-void Renderer::Generate3DView(const Player &player)
+void Renderer::Generate3DView(const Player& player)
 {
-    for(int x = 0; x < m_windowSize.x; x++)
+    for (int x = 0; x < m_windowSize.x; x++)
     {
         float distToProjPlane = m_halfWindowSize.x / tanf(player.m_fieldOfView / 2.0f);
         float correctDistanceToWall = m_rays[x].m_distance * cosf(m_rays[x].m_rayAngle - player.m_angle);
         int sliceHeight = static_cast<int>((1.0f / correctDistanceToWall) * distToProjPlane);
 
-        int wallCeil = static_cast<int>(m_halfWindowSize.y - (sliceHeight / 2.0f)); 
+        int wallCeil = static_cast<int>(m_halfWindowSize.y - (sliceHeight / 2.0f));
         int wallFloor = static_cast<int>(m_halfWindowSize.y + (sliceHeight / 2.0f));
 
-        for(int y = 0; y < m_windowSize.y; y++)
+        for (int y = 0; y < m_windowSize.y; y++)
         {
-            if(y < wallCeil)
+            if (y < wallCeil)
             {
                 float distToCeilPoint = ((player.m_height / (m_halfWindowSize.y - y)) * distToProjPlane) / cosf(m_rays[x].m_rayAngle - player.m_angle);
                 glm::vec2 floorPoint(player.m_position.x + cosf(m_rays[x].m_rayAngle) * distToCeilPoint, player.m_position.y + sinf(m_rays[x].m_rayAngle) * distToCeilPoint);
@@ -79,7 +79,7 @@ void Renderer::Generate3DView(const Player &player)
                 uint32_t texel = SampleTexture(sampleX, sampleY, m_ceilTexture);
                 m_colorBuffer[(y * m_windowSize.x) + x] = texel;
             }
-            else if(y > wallFloor)
+            else if (y > wallFloor)
             {
                 float distToFloorPoint = ((player.m_height / (y - m_halfWindowSize.y)) * distToProjPlane) / cosf(m_rays[x].m_rayAngle - player.m_angle);
                 glm::vec2 floorPoint(player.m_position.x + cosf(m_rays[x].m_rayAngle) * distToFloorPoint, player.m_position.y + sinf(m_rays[x].m_rayAngle) * distToFloorPoint);
@@ -95,19 +95,19 @@ void Renderer::Generate3DView(const Player &player)
                 float testAngle = atan2f(m_rays[x].m_fHit.y - blockMidPoint.y, m_rays[x].m_fHit.x - blockMidPoint.x); // angle between the m_fHit and the block mid point
 
                 // which side(i.e. quadrant) of the tile has the ray hit
-                if(testAngle >= -PI * 0.25f && testAngle < PI * 0.25f)
+                if (testAngle >= -PI * 0.25f && testAngle < PI * 0.25f)
                 {
                     sampleX = m_rays[x].m_fHit.y - m_rays[x].m_nHit.y;
                 }
-                if(testAngle >= PI * 0.25f && testAngle < PI * 0.75f)
+                if (testAngle >= PI * 0.25f && testAngle < PI * 0.75f)
                 {
                     sampleX = m_rays[x].m_fHit.x - m_rays[x].m_nHit.x;
                 }
-                if(testAngle < -PI * 0.25f && testAngle >= -PI * 0.75f)
+                if (testAngle < -PI * 0.25f && testAngle >= -PI * 0.75f)
                 {
                     sampleX = m_rays[x].m_fHit.x - m_rays[x].m_nHit.x;
                 }
-                if(testAngle >= PI * 0.75f || testAngle < -PI * 0.75f)
+                if (testAngle >= PI * 0.75f || testAngle < -PI * 0.75f)
                 {
                     sampleX = m_rays[x].m_fHit.y - m_rays[x].m_nHit.y;
                 }

@@ -6,7 +6,7 @@ Window::Window()
     Init();
 }
 
-Window::Window(glm::ivec2 windowSize, const std::string &title)
+Window::Window(glm::ivec2 windowSize, const std::string& title)
 {
     Init(windowSize, title);
 }
@@ -21,7 +21,7 @@ Window::~Window()
 void Window::ProcessInput(Player& player)
 {
     SDL_Event event;
-    while(SDL_PollEvent(&event))
+    while (SDL_PollEvent(&event))
     {
         switch (event.type)
         {
@@ -104,12 +104,12 @@ bool Window::IsRunning()
     return m_isRunning;
 }
 
-void Window::SetWindowTitle(const std::string &title)
+void Window::SetWindowTitle(const std::string& title)
 {
     SDL_SetWindowTitle(m_window, title.c_str());
 }
 
-SDL_Window *Window::GetWindow()
+SDL_Window* Window::GetWindow()
 {
     return m_window;
 }
@@ -119,7 +119,7 @@ glm::ivec2 Window::GetWindowSize()
     return m_windowSize;
 }
 
-void Window::Init(glm::ivec2 windowSize, const std::string &title)
+void Window::Init(glm::ivec2 windowSize, const std::string& title)
 {
     if (SDL_Init(SDL_INIT_VIDEO) != 0)
     {
@@ -134,7 +134,7 @@ void Window::Init(glm::ivec2 windowSize, const std::string &title)
 
     // Initialize SDL_image for loading in textures
     int imgFlags = IMG_INIT_PNG;
-    if(!(IMG_Init(imgFlags) & imgFlags))
+    if (!(IMG_Init(imgFlags) & imgFlags))
     {
         printf("Failed to initialize SDL_image. IMG_Error: %s\n", IMG_GetError());
     }
