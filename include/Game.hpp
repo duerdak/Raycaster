@@ -7,7 +7,7 @@
 
 class Game
 {
-    public:
+public:
     Game();
     ~Game();
 
@@ -17,9 +17,9 @@ class Game
 
     void Run();
 
-    private: 
+private:
     glm::ivec2 m_windowSize;
-    
+
     Window m_window;
     Renderer m_renderer;
     Map m_map;

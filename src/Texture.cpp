@@ -3,7 +3,7 @@
 
 Texture::Texture() : m_surface(nullptr)
 {
-    
+
 }
 
 Texture::Texture(const char* filePath, SDL_Window* window) : m_surface(nullptr)
@@ -21,7 +21,7 @@ Texture::Texture(Texture&& obj)
 
 Texture::~Texture()
 {
-    if(m_surface != nullptr)
+    if (m_surface != nullptr)
     {
         SDL_FreeSurface(m_surface);
     }
@@ -29,10 +29,10 @@ Texture::~Texture()
 
 void Texture::LoadTexture(const char* filePath, SDL_Window* window)
 {
-    if(window != nullptr)
+    if (window != nullptr)
     {
         m_surface = IMG_Load(filePath);
-        if(!m_surface)
+        if (!m_surface)
         {
             printf("Failed to load %s\n", filePath);
         }

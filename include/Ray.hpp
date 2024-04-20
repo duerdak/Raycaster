@@ -5,7 +5,7 @@
 
 class Ray
 {
-    public:
+public:
     Ray(float rayAngle);
     ~Ray();
 

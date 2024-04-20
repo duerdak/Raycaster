@@ -5,7 +5,7 @@
 
 class Window
 {
-    public:
+public:
     Window();
     Window(glm::ivec2 windowSize, const std::string& title);
     ~Window();
@@ -19,10 +19,10 @@ class Window
     SDL_Window* GetWindow();
     glm::ivec2 GetWindowSize();
 
-    private:
-    void Init(glm::ivec2 windowSize = {1280, 720}, const std::string& title = "Window");
+private:
+    void Init(glm::ivec2 windowSize = { 1280, 720 }, const std::string& title = "Window");
 
-    SDL_Window *m_window;
+    SDL_Window* m_window;
     glm::ivec2 m_windowSize;
     bool m_isRunning;
 };

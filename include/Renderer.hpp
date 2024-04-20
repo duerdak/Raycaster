@@ -8,7 +8,7 @@
 
 class Renderer
 {
-    public:
+public:
     Renderer(SDL_Window* window);
     ~Renderer();
 
@@ -28,12 +28,12 @@ class Renderer
     /// @brief Update the color buffer texture with the pixels of the screen array
     void RenderColorBuffer();
 
-    private:
+private:
     /// @brief Pass in coordinates in [0 - 1] range to sample a color from a texture
     /// @return A uint32_t color
     uint32_t SampleTexture(float x, float y, Texture& texture);
 
-    SDL_Renderer *m_renderer;
+    SDL_Renderer* m_renderer;
 
     // array for storing the screen pixels
     uint32_t* m_colorBuffer;
